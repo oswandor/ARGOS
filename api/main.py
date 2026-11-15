@@ -19,6 +19,28 @@ logging.basicConfig(
 )
 
 
+class _DropHealthAccess(logging.Filter):
+    """El healthcheck de Docker cada 5 s no debe inundar el log."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        message = record.getMessage()
+        return '"GET /health' not in message and '"GET /ready' not in message
+
+
+class _DropApproxTokenWarning(logging.Filter):
+    """CrewAI avisa en cada llamada de que no puede contar tokens exactos."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        return "approximate input token count" not in record.getMessage()
+
+
+logging.getLogger("uvicorn.access").addFilter(_DropHealthAccess())
+logging.getLogger("crewai.llms.base_llm").addFilter(_DropApproxTokenWarning())
+# httpx registra cada sondeo al runner y cada llamada a DeepSeek: ruido para el operador.
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("httpcore").setLevel(logging.WARNING)
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     init_db()

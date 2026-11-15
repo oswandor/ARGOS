@@ -94,7 +94,11 @@ En la pila Compose se configura en `.env.docker`:
 CREW_ENABLED=true
 CREW_MODEL=deepseek-chat
 CREW_MAX_TOOL_CALLS=4
+CREW_VERBOSE=true
 ```
+
+`CREW_VERBOSE=true` muestra en `docker compose logs api` la traza de CrewAI (agente, tarea,
+herramientas, Final Answer). Detalle en [logs.md](logs.md).
 
 Tras cambiarlo: `docker compose --env-file .env.docker up -d --force-recreate api`.
 

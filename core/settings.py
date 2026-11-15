@@ -38,6 +38,8 @@ class Settings(BaseSettings):
     # deepseek-chat = alias sin thinking: más rápido y sin respuestas vacías.
     crew_model: str = "deepseek-chat"
     crew_max_tool_calls: int = 4
+    # Salida detallada de CrewAI (rol, tarea, Thinking..., Final Answer) en los logs.
+    crew_verbose: bool = True
 
     # --- Ejecución de herramientas ---
     # auto: Docker si hay daemon e imagen; si no, in-process.

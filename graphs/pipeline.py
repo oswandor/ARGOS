@@ -89,6 +89,14 @@ class Investigator:
         self.db.flush()
         self.investigation_id = investigation.id
         sample.status = "analyzing"
+        logger.info(
+            "investigation.start id=%s sample=%s type=%s size=%s sha256=%s",
+            investigation.id,
+            sample.filename,
+            sample.detected_type,
+            sample.size,
+            sample.sha256,
+        )
 
         try:
             self.sample = sample
@@ -162,6 +170,18 @@ class Investigator:
                 ensure_ascii=False,
             )
             self._persist_iocs()
+            logger.info(
+                "investigation.end id=%s verdict=%s confidence=%s risk=%s evidence=%s "
+                "iocs=%s crew=%s tokens=%s",
+                investigation.id,
+                assessment.verdict,
+                assessment.confidence,
+                assessment.risk_score,
+                len(self.evidence),
+                len(self.iocs),
+                self.crew_meta.get("status"),
+                investigation.tokens_used,
+            )
         except Exception as exc:  # noqa: BLE001 - la investigación falla, el proceso no
             investigation.status = "failed"
             investigation.error = f"{type(exc).__name__}: {exc}"[:2000]

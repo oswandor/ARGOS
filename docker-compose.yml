@@ -55,6 +55,7 @@ services:
       DEEPSEEK_BASE_URL: ${DEEPSEEK_BASE_URL:-https://api.deepseek.com}
       CREW_ENABLED: ${CREW_ENABLED:-true}
       CREW_MODEL: ${CREW_MODEL:-deepseek-chat}
+      CREW_VERBOSE: ${CREW_VERBOSE:-true}
       API_KEY: ${API_KEY:-}
     ports: ["127.0.0.1:${ARGOS_API_PORT:-8000}:8000"]
     volumes: ["argos_data:/data", "./reports:/app/reports"]

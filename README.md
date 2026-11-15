@@ -210,6 +210,14 @@ ARGOS_API_PORT=8010
 
 y vuelve a ejecutar `.\docker\up.ps1`. La API sigue escuchando solo en `127.0.0.1`.
 
+### 4.5 Kubernetes / AKS
+
+El sandbox actual depende del daemon de Docker (`sandbox-runner` usa el socket). **AKS usa
+containerd y no expone ese socket**, así que no funciona tal cual: hay que cambiar el runner por
+uno basado en `Job` de Kubernetes, o dejar el sandbox fuera del clúster.
+
+Guía completa, manifiestos y decisión: [docs/aks.md](docs/aks.md).
+
 ---
 
 ## 5. Uso
@@ -387,6 +395,7 @@ Todo se configura en `.env.docker` (ignorado por git). Plantilla completa en
 | `ENABLE_LLM` | `true` | Interruptor global de LLM |
 | `CREW_ENABLED` | `true` | Multiagente CrewAI |
 | `CREW_MODEL` | `deepseek-chat` | Modelo de los agentes (sin thinking) |
+| `CREW_VERBOSE` | `true` | Paneles de CrewAI (agente/tarea/herramienta/Final Answer) en los logs |
 | `MAX_TOKENS_PER_INVESTIGATION` | `60000` | Presupuesto de tokens |
 | `STRICT_PRIVACY` | `true` | Solo hechos sanitizados al LLM |
 | `API_KEY` | vacío | Si se define, exige `X-API-Key` |
@@ -469,6 +478,21 @@ docker compose --env-file .env.docker up -d --force-recreate api
 
 Los contenedores usan `restart` de Compose (no `always`): si reinicias Docker Desktop, ejecuta
 `.\docker\up.ps1` de nuevo.
+
+### Logs
+
+```powershell
+docker compose --env-file .env.docker logs -f api
+docker compose --env-file .env.docker logs -f sandbox-runner
+```
+
+Con `CREW_VERBOSE=true` (por defecto) verás la traza completa de los agentes: **Crew/Task/Agent
+Started**, herramientas con sus argumentos y resultados, `Final Answer` de cada agente, y las
+líneas `argos.crew` con plan, familias, validación y narrativa. Los healthchecks y los sondeos al
+runner están filtrados para no inundar el log.
+
+Para logs compactos: `CREW_VERBOSE=false` y recrea la API. Guía completa en
+[docs/logs.md](docs/logs.md).
 
 ---
 
@@ -599,6 +623,8 @@ docker compose --env-file .env.docker exec api python -c "import urllib.request;
 | --- | --- |
 | [docs/arquitectura.md](docs/arquitectura.md) | Arquitectura actual: Compose, runner, pipeline, agentes, datos |
 | [docs/crew.md](docs/crew.md) | Agentes CrewAI: dos fases, guardarraíles, modelo y costes |
+| [docs/logs.md](docs/logs.md) | Logs de análisis: traza de agentes, niveles, privacidad y rotación |
+| [docs/aks.md](docs/aks.md) | Despliegue en AKS: qué funciona, qué hay que cambiar y paso a paso |
 | [docs/sandbox.md](docs/sandbox.md) | Aislamiento, imágenes, runner y contrato worker ↔ host |
 | [docs/deepseek.md](docs/deepseek.md) | Integración con DeepSeek, modelos, privacidad y verificación |
 | [docs/seguridad.md](docs/seguridad.md) | Modelo de amenazas del laboratorio y controles |
