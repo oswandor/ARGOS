@@ -1,0 +1,40 @@
+{
+  "_comment": "Seed de reputación SOLO para el MVP. Indicadores ficticios salvo el hash de EICAR (archivo de prueba estándar).",
+  "indicators": [
+    {
+      "type": "hash",
+      "value": "275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f",
+      "verdict": "malicious",
+      "source": "eicar-test-file",
+      "note": "Hash SHA-256 del archivo de prueba EICAR"
+    },
+    {
+      "type": "domain",
+      "value": "malicious.example",
+      "verdict": "malicious",
+      "source": "seed-demo",
+      "note": "Dominio ficticio de demostración"
+    },
+    {
+      "type": "domain",
+      "value": "cdn-bad.example",
+      "verdict": "suspicious",
+      "source": "seed-demo",
+      "note": "Dominio ficticio de demostración"
+    },
+    {
+      "type": "url",
+      "value": "http://malicious.example/payload.exe",
+      "verdict": "malicious",
+      "source": "seed-demo",
+      "note": "URL ficticia de demostración"
+    },
+    {
+      "type": "ip",
+      "value": "203.0.113.66",
+      "verdict": "suspicious",
+      "source": "seed-demo",
+      "note": "Rango TEST-NET-3 (RFC 5737), no enrutable"
+    }
+  ]
+}

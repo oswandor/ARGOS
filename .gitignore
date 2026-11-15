@@ -1,0 +1,70 @@
+# --- secretos ---
+.env
+.env.docker.example
+.env.example
+.env.*
+!.env.example
+!.env.docker.example
+*.pem
+*.key
+
+# --- datos generados (no versionar) ---
+data/blobs/
+data/*.db
+data/*.db-journal
+data/demo_upload.pdf
+data/*.pdf
+data/_debug/
+reports/out/
+
+# --- muestras y artefactos (contienen malware real) ---
+samples/quarantine/
+samples/artifacts/
+samples/benign/*
+!samples/benign/.gitkeep
+!samples/benign/README.md
+*.malware
+*.bin
+*.exe
+*.dll
+*.docm
+*.xlsm
+*.js.mal
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+coverage.xml
+htmlcov/
+.benchmarks/
+
+# --- Node ---
+node_modules/
+npm-debug.log*
+
+# --- Docker / datos locales ---
+docker/data/
+work/
+*.sqlite
+*.db
+
+# --- IDE / SO ---
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+
+# --- informes generados ---
+reports/out/
+*.report.pdf
+.dockerignore
+.env.docker.example
+.env.example
