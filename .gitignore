@@ -81,6 +81,9 @@ desktop.ini
 # --- informes generados ---
 reports/out/
 *.report.pdf
+.playwright-mcp/
+backend/reports/*.log
+reports/*.log
 .dockerignore
 .env.docker.example
 .env.example
