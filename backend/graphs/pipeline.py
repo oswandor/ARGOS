@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
+import threading
 import traceback
 from datetime import UTC, datetime
 from typing import Any
@@ -81,6 +82,7 @@ class Investigator:
             "duration_ms": 0,
         }
         self._crew_calls = 0
+        self._tool_lock = threading.RLock()
 
     # ------------------------------------------------------------------ run
     def event(self, phase: str, message: str, level: str = "info") -> None:
@@ -197,6 +199,7 @@ class Investigator:
                 investigation.tokens_used,
             )
         except Exception as exc:  # noqa: BLE001 - la investigación falla, el proceso no
+            self.db.rollback()
             investigation.status = "failed"
             investigation.error = f"{type(exc).__name__}: {exc}"[:2000]
             investigation.finished_at = _now()
@@ -315,6 +318,10 @@ class Investigator:
 
     def execute_tool_for_crew(self, tool_id: str) -> dict:
         """Herramienta `run_analysis` del supervisor: revalida y ejecuta."""
+        with self._tool_lock:
+            return self._execute_tool_for_crew_locked(tool_id)
+
+    def _execute_tool_for_crew_locked(self, tool_id: str) -> dict:
         sample = self.sample
         if sample is None:
             return {"status": "error", "error": "sin muestra activa"}

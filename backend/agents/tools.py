@@ -9,9 +9,10 @@ Reglas:
 from __future__ import annotations
 
 import json
+import threading
 from collections.abc import Callable
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, PrivateAttr
 
 try:  # CrewAI es opcional: el pipeline determinista no depende de él.
     from crewai.tools import BaseTool
@@ -54,16 +55,18 @@ class RunAnalysisTool(BaseTool):  # type: ignore[misc]
     runner: Callable[[str], dict] = Field(exclude=True)
     max_calls: int = 4
     calls: int = 0
+    _call_lock: threading.Lock = PrivateAttr(default_factory=threading.Lock)
 
     def _run(self, tool_id: str, reason: str = "") -> str:
-        if self.calls >= self.max_calls:
-            return json.dumps(
-                {
-                    "status": "rejected",
-                    "error": f"presupuesto de herramientas agotado ({self.max_calls})",
-                }
-            )
-        self.calls += 1
+        with self._call_lock:
+            if self.calls >= self.max_calls:
+                return json.dumps(
+                    {
+                        "status": "rejected",
+                        "error": f"presupuesto de herramientas agotado ({self.max_calls})",
+                    }
+                )
+            self.calls += 1
         try:
             result = self.runner(tool_id)
         except Exception as exc:  # noqa: BLE001
