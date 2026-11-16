@@ -8,7 +8,8 @@ from __future__ import annotations
 
 import json
 
-from fastapi import APIRouter, BackgroundTasks, Depends, File, HTTPException, Query, UploadFile
+from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, Query, UploadFile
+from sqlalchemy import update
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -17,13 +18,97 @@ from starlette.concurrency import run_in_threadpool
 from api.security import require_api_key
 from core.db import get_session
 from core.ingest import IngestError, ingest
-from core.models import Investigation, Sample
+from core.models import Investigation, InvestigationEvent, InvestigationOptions, Sample
 from core.report import to_html, to_markdown
 from core.service import latest_investigation, run_investigation
 from core.settings import get_settings
 from core.storage import LocalStorage
 
 router = APIRouter()
+
+
+@router.get("/investigation-options", tags=["analysis"])
+def investigation_defaults(_: None = Depends(require_api_key)) -> dict:
+    settings = get_settings()
+    return {"enable_llm": settings.enable_llm, "crew_enabled": settings.crew_enabled,
+            "strict_privacy": settings.strict_privacy, "llm_configured": settings.llm_enabled}
+
+
+@router.post("/investigations", status_code=201, tags=["analysis"])
+async def create_investigation(
+    file: UploadFile = File(...), enable_llm: bool = Form(...), crew_enabled: bool = Form(...),
+    strict_privacy: bool = Form(...), db: Session = Depends(get_session),
+    _: None = Depends(require_api_key),
+) -> dict:
+    if crew_enabled and not enable_llm:
+        raise HTTPException(status_code=422, detail="CrewAI requiere LLM habilitado")
+    settings = get_settings()
+    data = await file.read(settings.max_upload_mb * 1024 * 1024 + 1)
+    if len(data) > settings.max_upload_mb * 1024 * 1024:
+        raise HTTPException(status_code=413, detail=f"archivo mayor de {settings.max_upload_mb} MB")
+    try:
+        sample, deduplicated = ingest(db, LocalStorage(settings.blob_dir), settings,
+                                      filename=file.filename or "muestra.bin", data=data)
+    except IngestError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    investigation = Investigation(sample_id=sample.id, status="queued")
+    db.add(investigation)
+    db.flush()
+    db.add(InvestigationOptions(investigation_id=investigation.id, enable_llm=enable_llm,
+                                crew_enabled=crew_enabled, strict_privacy=strict_privacy))
+    db.add(InvestigationEvent(investigation_id=investigation.id, phase="investigation",
+                              message="Investigación creada"))
+    db.commit()
+    return {"investigation_id": investigation.id, "sample_id": sample.id,
+            "deduplicated": deduplicated, "status": "queued"}
+
+
+@router.post("/investigations/{investigation_id}/start", status_code=202, tags=["analysis"])
+async def start_investigation(investigation_id: str, background: BackgroundTasks, wait: bool = False,
+                              db: Session = Depends(get_session), _: None = Depends(require_api_key)) -> dict:
+    investigation = db.get(Investigation, investigation_id)
+    if investigation is None:
+        raise HTTPException(status_code=404, detail="investigación no encontrada")
+    result = db.execute(update(Investigation).where(Investigation.id == investigation_id,
+                        Investigation.status == "queued").values(status="starting"))
+    if result.rowcount != 1:
+        db.rollback()
+        raise HTTPException(status_code=409, detail="investigación ya iniciada")
+    sample_id = investigation.sample_id
+    db.commit()
+    if wait:
+        await run_in_threadpool(run_investigation, sample_id, investigation_id)
+        db.expire_all()
+        return {"investigation_id": investigation_id, "status": db.get(Investigation, investigation_id).status}
+    background.add_task(run_investigation, sample_id, investigation_id)
+    return {"investigation_id": investigation_id, "status": "starting"}
+
+
+@router.get("/investigations/{investigation_id}", tags=["analysis"])
+def get_investigation(investigation_id: str, db: Session = Depends(get_session),
+                      _: None = Depends(require_api_key)) -> dict:
+    investigation = db.get(Investigation, investigation_id)
+    if investigation is None:
+        raise HTTPException(status_code=404, detail="investigación no encontrada")
+    options = db.get(InvestigationOptions, investigation_id)
+    return {"investigation_id": investigation.id, "sample_id": investigation.sample_id,
+            "status": investigation.status, "verdict": investigation.verdict, "error": investigation.error,
+            "llm_status": investigation.llm_status,
+            "options": {"enable_llm": options.enable_llm, "crew_enabled": options.crew_enabled,
+                        "strict_privacy": options.strict_privacy} if options else None,
+            "report": json.loads(investigation.report_json) if investigation.report_json else None}
+
+
+@router.get("/investigations/{investigation_id}/events", tags=["analysis"])
+def get_investigation_events(investigation_id: str, after: int = Query(default=0, ge=0),
+                             db: Session = Depends(get_session), _: None = Depends(require_api_key)) -> dict:
+    if db.get(Investigation, investigation_id) is None:
+        raise HTTPException(status_code=404, detail="investigación no encontrada")
+    events = db.scalars(select(InvestigationEvent).where(InvestigationEvent.investigation_id == investigation_id,
+                        InvestigationEvent.id > after).order_by(InvestigationEvent.id).limit(200)).all()
+    return {"items": [{"id": event.id, "phase": event.phase, "level": event.level,
+                       "message": event.message, "created_at": event.created_at.isoformat()} for event in events],
+            "next_cursor": events[-1].id if events else after}
 
 
 def _sample_payload(db: Session, sample: Sample) -> dict:

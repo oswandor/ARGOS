@@ -57,6 +57,7 @@ class Settings(BaseSettings):
 
     # --- API ---
     api_key: str = ""  # vacío = sin autenticación (solo desarrollo local)
+    cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
     max_upload_mb: int = 50
 
     # --- Límites de análisis ---

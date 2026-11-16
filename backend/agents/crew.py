@@ -473,6 +473,8 @@ def run_crew(
     def event(phase: str, status: str, **details: object) -> None:
         item = {"phase": phase, "status": status, **details}
         result.events.append(item)
+        if hasattr(investigator, "event"):
+            investigator.event("crew", f"Fase {phase}: {status}", "warning" if status in {"error", "retry"} else "info")
         logger.info("crew.event %s", json.dumps(item, ensure_ascii=False, separators=(",", ":")))
 
     try:

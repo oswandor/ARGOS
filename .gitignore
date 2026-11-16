@@ -10,6 +10,18 @@
 
 # --- datos generados (no versionar) ---
 data/blobs/
+backend/data/blobs/
+backend/data/*.db
+backend/data/*.db-journal
+backend/data/demo_upload.pdf
+backend/data/*.pdf
+backend/data/_debug/
+backend/reports/out/
+backend/samples/quarantine/
+backend/samples/artifacts/
+backend/samples/benign/*
+!backend/samples/benign/.gitkeep
+!backend/samples/benign/README.md
 data/*.db
 data/*.db-journal
 data/demo_upload.pdf
@@ -37,6 +49,7 @@ __pycache__/
 .venv/
 venv/
 .pytest_cache/
+.pytest-tmp-*/
 .ruff_cache/
 .mypy_cache/
 *.egg-info/

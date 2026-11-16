@@ -18,7 +18,7 @@ from sqlalchemy.orm import Session
 from agents.crew import CrewResult, crew_available, run_crew
 from core.hashing import sha256_bytes
 from core.llm import review as llm_review
-from core.models import IOC, Artifact, Evidence, Investigation, IOCOccurrence, Sample, ToolRun, new_id
+from core.models import IOC, Artifact, Evidence, Investigation, InvestigationEvent, IOCOccurrence, Sample, ToolRun, new_id
 from core.policy import ALLOWLIST, Budget, BudgetExceeded, PolicyError
 from core.report import build_report
 from core.sanitizer import defang
@@ -83,12 +83,20 @@ class Investigator:
         self._crew_calls = 0
 
     # ------------------------------------------------------------------ run
-    def run(self, sample: Sample) -> Investigation:
-        investigation = Investigation(sample_id=sample.id, status="running")
-        self.db.add(investigation)
+    def event(self, phase: str, message: str, level: str = "info") -> None:
+        self.db.add(InvestigationEvent(investigation_id=self.investigation_id, phase=phase,
+                                       message=message[:500], level=level))
+        self.db.commit()
+
+    def run(self, sample: Sample, investigation: Investigation | None = None) -> Investigation:
+        if investigation is None:
+            investigation = Investigation(sample_id=sample.id, status="running")
+            self.db.add(investigation)
+        investigation.status = "running"
         self.db.flush()
         self.investigation_id = investigation.id
         sample.status = "analyzing"
+        self.event("investigation", "Investigación iniciada")
         logger.info(
             "investigation.start id=%s sample=%s type=%s size=%s sha256=%s",
             investigation.id,
@@ -101,6 +109,7 @@ class Investigator:
         try:
             self.sample = sample
             crew_result = self._crew_phase(sample)
+            self.event("analysis", "Análisis de herramientas finalizado")
             self._lookup_intel(sample)
 
             assessment = aggregate(
@@ -152,6 +161,11 @@ class Investigator:
                 crew_meta=self.crew_meta,
                 timings=self.timings,
             )
+            report["analysis_options"] = {
+                "enable_llm": self.settings.enable_llm,
+                "crew_enabled": self.settings.crew_enabled,
+                "strict_privacy": self.settings.strict_privacy,
+            }
 
             investigation.verdict = assessment.verdict
             investigation.confidence = assessment.confidence
@@ -189,6 +203,8 @@ class Investigator:
             sample.status = "failed"
             self.warnings.append(traceback.format_exc()[-3000:])
         self.db.commit()
+        self.event("investigation", "Investigación finalizada" if investigation.status == "done" else
+                   "La investigación terminó con error", "info" if investigation.status == "done" else "error")
         return investigation
 
     # -------------------------------------------------------------- análisis
@@ -217,6 +233,7 @@ class Investigator:
             if key in self._analyzed_tools:
                 continue
             self._analyzed_tools.add(key)
+            self.event("tool", f"Herramienta iniciada: {tool_id}")
             try:
                 output = registry.run(tool_id, ctx, self.budget, is_child=depth > 0)
             except PolicyError as exc:
@@ -228,6 +245,7 @@ class Investigator:
                 break
 
             self._record(sample, output)
+            self.event("tool", f"Herramienta {tool_id}: {output.status}")
             if output.artifacts:
                 self._handle_artifacts(sample, output, depth)
 
@@ -235,10 +253,12 @@ class Investigator:
     def _crew_phase(self, sample: Sample) -> CrewResult | None:
         """Ejecuta el crew si está disponible; si no, plan determinista completo."""
         if not crew_available(self.settings):
+            self.event("crew", "CrewAI no disponible o deshabilitado; se usa análisis determinista", "warning")
             self._analyze(sample)
             return None
 
         result = run_crew(self, self.settings, ensure_evidence=lambda: self._ensure_evidence(sample))
+        self.event("crew", f"CrewAI finalizado: {result.status}", "info" if result.ok else "warning")
         self.crew_meta = {
             "status": result.status,
             "agents": result.agents,
@@ -309,6 +329,7 @@ class Investigator:
 
         self._crew_calls += 1
         logger.info("crew.tool.start tool=%s sample_type=%s call=%s", tool_id, sample.detected_type, self._crew_calls)
+        self.event("tool", f"Herramienta iniciada: {tool_id}")
         data = self.storage.get(sample.storage_key)
         ctx = ToolContext(
             sample_id=sample.id,

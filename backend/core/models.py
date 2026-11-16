@@ -63,6 +63,24 @@ class Investigation(Base):
     sample: Mapped[Sample] = relationship(lazy="joined")
 
 
+class InvestigationOptions(Base):
+    __tablename__ = "investigation_options"
+    investigation_id: Mapped[str] = mapped_column(String(40), ForeignKey("investigations.id"), primary_key=True)
+    enable_llm: Mapped[bool] = mapped_column(Boolean)
+    crew_enabled: Mapped[bool] = mapped_column(Boolean)
+    strict_privacy: Mapped[bool] = mapped_column(Boolean)
+
+
+class InvestigationEvent(Base):
+    __tablename__ = "investigation_events"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    investigation_id: Mapped[str] = mapped_column(String(40), ForeignKey("investigations.id"), index=True)
+    phase: Mapped[str] = mapped_column(String(48))
+    level: Mapped[str] = mapped_column(String(16), default="info")
+    message: Mapped[str] = mapped_column(String(500))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
 class Evidence(Base):
     __tablename__ = "evidence"
 

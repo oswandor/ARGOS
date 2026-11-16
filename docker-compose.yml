@@ -1,98 +1,20 @@
 name: argos
 
+include:
+  - path: ./backend/docker-compose.yml
+    project_directory: ./backend
+    env_file: ./backend/.env.docker
+
 services:
-  postgres:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_DB: argos
-      POSTGRES_USER: argos
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-argos-local-only}
-    volumes: ["argos_pg:/var/lib/postgresql/data"]
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U argos -d argos"]
-      interval: 5s
-      timeout: 3s
-      retries: 15
-
-  sandbox-runner:
-    image: argos/sandbox-runner:0.1.0
-    build: {context: ., dockerfile: docker/runner.Dockerfile}
-    environment:
-      RUNNER_SHARED_TOKEN: ${RUNNER_SHARED_TOKEN:?Define RUNNER_SHARED_TOKEN en .env}
-      WORKER_IMAGE_PREFIX: argos/worker
-      WORKER_IMAGE_TAG: 0.1.0
-    volumes: ["/var/run/docker.sock:/var/run/docker.sock"]
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8081/ready')"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-
-  api:
-    image: argos/api:0.1.0
-    build: {context: ., dockerfile: docker/api.Dockerfile}
-    environment:
-      DATABASE_URL: postgresql+psycopg://argos:${POSTGRES_PASSWORD:-argos-local-only}@postgres:5432/argos
-      DATA_DIR: /data
-      EXECUTOR: runner
-      ENABLE_LLM: ${ENABLE_LLM:-true}
-      LLM_TIMEOUT_S: ${LLM_TIMEOUT_S:-90}
-      MAX_TOKENS_PER_INVESTIGATION: ${MAX_TOKENS_PER_INVESTIGATION:-60000}
-      STRICT_PRIVACY: ${STRICT_PRIVACY:-true}
-      MODEL_FAST: ${MODEL_FAST:-deepseek-flash}
-      MODEL_DEEP: ${MODEL_DEEP:-deepseek-v4-pro}
-      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-50}
-      MAX_DEPTH: ${MAX_DEPTH:-3}
-      MAX_CHILDREN: ${MAX_CHILDREN:-20}
-      MAX_ARTIFACT_BYTES: ${MAX_ARTIFACT_BYTES:-5242880}
-      MAX_JS_BYTES: ${MAX_JS_BYTES:-200000}
-      MAX_STREAMS: ${MAX_STREAMS:-400}
-      ALLOW_EXTERNAL_INTEL: ${ALLOW_EXTERNAL_INTEL:-false}
-      VIRUS_TOTAL_API_KEY: ${VIRUS_TOTAL_API_KEY:-}
-      SANDBOX_RUNNER_URL: http://sandbox-runner:8081
-      RUNNER_SHARED_TOKEN: ${RUNNER_SHARED_TOKEN:?Define RUNNER_SHARED_TOKEN en .env}
-      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
-      DEEPSEEK_BASE_URL: ${DEEPSEEK_BASE_URL:-https://api.deepseek.com}
-      CREW_ENABLED: ${CREW_ENABLED:-true}
-      CREW_MODEL: ${CREW_MODEL:-deepseek-chat}
-      CREW_VERBOSE: ${CREW_VERBOSE:-true}
-      API_KEY: ${API_KEY:-}
-    ports: ["127.0.0.1:${ARGOS_API_PORT:-8000}:8000"]
-    volumes: ["argos_data:/data", "./reports:/app/reports"]
+  frontend:
+    image: argos/frontend:0.1.0
+    build:
+      context: ./frontend-argos
+      args:
+        VITE_API_URL: /api
+        VITE_API_KEY: ${VITE_API_KEY:-}
+    ports:
+      - "127.0.0.1:${ARGOS_FRONTEND_PORT:-5173}:80"
     depends_on:
-      postgres: {condition: service_healthy}
-      sandbox-runner: {condition: service_started}
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
-      interval: 5s
-      timeout: 3s
-      retries: 20
-
-  worker-base:
-    image: argos/worker-base:0.1.0
-    build: {context: ., dockerfile: docker/worker-base.Dockerfile}
-    profiles: ["build"]
-  worker-pdf:
-    image: argos/worker-pdf:0.1.0
-    build: {context: ., dockerfile: docker/worker-pdf.Dockerfile, args: {BASE_IMAGE: argos/worker-base:0.1.0}}
-    profiles: ["build"]
-  worker-office:
-    image: argos/worker-office:0.1.0
-    build: {context: ., dockerfile: docker/worker-office.Dockerfile, args: {BASE_IMAGE: argos/worker-base:0.1.0}}
-    profiles: ["build"]
-  worker-js:
-    image: argos/worker-js:0.1.0
-    build: {context: ., dockerfile: docker/worker-js.Dockerfile, args: {BASE_IMAGE: argos/worker-base:0.1.0}}
-    profiles: ["build"]
-  worker-binary:
-    image: argos/worker-binary:0.1.0
-    build: {context: ., dockerfile: docker/worker-binary.Dockerfile, args: {BASE_IMAGE: argos/worker-base:0.1.0}}
-    profiles: ["build"]
-  worker-yara:
-    image: argos/worker-yara:0.1.0
-    build: {context: ., dockerfile: docker/worker-yara.Dockerfile, args: {BASE_IMAGE: argos/worker-base:0.1.0}}
-    profiles: ["build"]
-
-volumes:
-  argos_pg:
-  argos_data:
+      api:
+        condition: service_healthy
