@@ -16,4 +16,10 @@ También puedes iniciar la interfaz para desarrollo con `cd frontend-argos`, cop
 
 Consulta la [documentación del backend](backend/README.md) para más detalles.
 
+### Impeccable para el frontend
+
+La skill Impeccable está instalada en `frontend-argos/.agents/skills/impeccable`. Abre `frontend-argos` como proyecto en Codex y recarga la sesión para descubrirla. Para iniciar el contexto del producto, solicita `$impeccable init`; también puedes pedir `$impeccable critique el dashboard` o `$impeccable audit el frontend`. La skill es una herramienta para el agente, no forma parte de la aplicación React ni de su imagen Docker. El hook automático no está instalado.
+
+Para usar el detector desde PowerShell, ejecuta `cd frontend-argos` y luego `npx impeccable --help` o `npx impeccable detect src/`. También funciona `npm run impeccable -- --help`. El nombre `$impeccable` se escribe en el chat de Codex, no en PowerShell, y la instalación local no crea un comando global en el PATH.
+
 La interfaz permite elegir si espera el resultado y configurar LLM, CrewAI y privacidad por investigación. La actividad se muestra en el detalle de la muestra. Para clientes API, `GET /investigation-options` devuelve los valores iniciales; `POST /investigations` recibe el archivo y las opciones como formulario, y devuelve el identificador. Después `POST /investigations/{id}/start?wait=false` inicia el análisis. `GET /investigations/{id}` devuelve el estado y `GET /investigations/{id}/events?after=0` permite consultar eventos incrementales usando `next_cursor`.

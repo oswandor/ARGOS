@@ -1,0 +1,41 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e9]:
+      - strong [ref=e10]: ARGOS
+      - generic [ref=e11]: THREAT LAB
+    - generic [ref=e12]: ESPACIO DE TRABAJO
+    - navigation "Navegación principal" [ref=e13]:
+      - button "Resumen" [ref=e14] [cursor=pointer]
+      - button "Muestras" [ref=e23] [cursor=pointer]
+      - button "Indicadores" [active] [ref=e30] [cursor=pointer]
+      - button "Herramientas" [ref=e41] [cursor=pointer]
+      - button "Configuración" [ref=e45] [cursor=pointer]
+    - generic [ref=e50]:
+      - strong [ref=e51]: Centro de análisis
+      - paragraph [ref=e52]: Un espacio para investigar amenazas.
+      - generic [ref=e53]: Estado no disponible
+    - generic [ref=e55]: ARGOS · LABORATORIO
+  - main [ref=e56]:
+    - generic [ref=e57]:
+      - generic [ref=e58]:
+        - generic [ref=e59]: ESPACIO DE TRABAJO
+        - strong [ref=e62]: Indicadores
+      - generic [ref=e63]: Sin conexión
+    - generic [ref=e69]:
+      - generic [ref=e71]:
+        - heading "Indicadores" [level=1] [ref=e262]
+        - paragraph [ref=e73]: Busca indicadores de compromiso correlacionados.
+      - alert [ref=e207]:
+        - generic [ref=e210]: No se pudo conectar con la API. Comprueba que el backend esté disponible.
+        - button "Reintentar" [ref=e211] [cursor=pointer]
+      - generic [ref=e263]:
+        - generic [ref=e265]:
+          - heading "Buscar indicadores" [level=2] [ref=e266]
+          - paragraph [ref=e267]: Consulta hashes, dominios, direcciones IP o correos.
+        - generic [ref=e268]:
+          - textbox "Buscar indicador" [ref=e273]:
+            - /placeholder: Buscar un indicador...
+          - button "Buscar" [disabled] [ref=e274]
+    - generic [ref=e202]:
+      - generic [ref=e203]: ARGOS / LABORATORIO DE ANÁLISIS
+      - generic [ref=e204]: OBSERVA · ANALIZA · COMPRENDE

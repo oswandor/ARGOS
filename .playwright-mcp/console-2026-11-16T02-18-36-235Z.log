@@ -1,0 +1,102 @@
+[     575ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:5180/node_modules/.vite/deps/react-dom_client.js?v=db27da36:15802
+[     776ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/investigation-options' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[     777ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/investigation-options:1
+[     778ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/investigation-options' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[     778ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/investigation-options:1
+[     811ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[     811ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[     816ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[     816ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[     851ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[     851ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[     923ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[     923ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[    1300ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[    1300ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
+[    1725ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[    1725ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
+[   10746ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   10746ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[   10762ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   10762ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[   11556ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   11556ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
+[   20751ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   20752ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[   20772ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   20772ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[   21145ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   21145ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
+[   30745ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   30745ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[   30772ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   30772ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[   31193ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   31193ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
+[   40746ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   40746ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[   40761ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   40761ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[   41125ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   41125ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
+[   50737ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   50737ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[   50752ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   50753ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[   51170ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   51170ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
+[   60744ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   60744ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[   60758ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   60758ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[   61173ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   61173ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
+[   70749ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   70749ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[   70763ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   70763ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[   71131ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   71132ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
+[   80743ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   80743ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[   80761ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   80762ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[   81130ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   81130ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
+[   90747ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   90747ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[   90760ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   90760ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[   91122ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[   91122ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
+[  100780ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[  100780ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[  100854ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[  100855ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[  101379ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[  101379ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
+[  110747ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[  110747ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[  110767ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[  110767ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[  111244ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[  111244ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
+[  117166ms] [LOG] [vite] server connection lost. Polling for restart... @ http://127.0.0.1:5180/@vite/client:1078
+[  120762ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[  120762ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[  120814ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[  120815ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[  121316ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[  121317ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
+[  130764ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[  130765ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[  130795ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[  130795ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[  131370ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[  131371ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
+[  140743ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/analysis-statistics' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[  140743ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/analysis-statistics:1
+[  140765ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/malware-samples' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[  140765ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/malware-samples:1
+[  141152ms] [ERROR] Access to fetch at 'http://127.0.0.1:8000/health' from origin 'http://127.0.0.1:5180' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://127.0.0.1:5180/:1
+[  141152ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://127.0.0.1:8000/health:1
