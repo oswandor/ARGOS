@@ -26,6 +26,10 @@ El proyecto realiza principalmente análisis estático y, según la herramienta,
 
 Las capacidades disponibles dependen de las imágenes, herramientas y servicios configurados en el backend. La búsqueda de indicadores consulta los registros devueltos por la API; no implica que se consulten servicios externos en cada búsqueda.
 
+
+<img width="1898" height="948" alt="image" src="https://github.com/user-attachments/assets/121ec938-706b-403b-91a9-f4c232ea5e4a" />
+
+
 ## Arquitectura
 
 ```mermaid
